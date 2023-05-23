@@ -33,7 +33,6 @@ module "ec2" {
   public_subnets = "${module.vpc.public_subnets}"
   web_sg = "${module.vpc.web_sg}"
   main_vpc = "${module.vpc.main_vpc_id}"
-  # web_tg_attachment = "${module.ecs.frontend_service_id}"
 }
 
 module "ecr" {

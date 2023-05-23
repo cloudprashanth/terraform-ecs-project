@@ -13,6 +13,7 @@ module "ecs" {
   frontend_tg = "${module.ec2.web_tg_arn}"
   frontend_port = 80
   elb_name = "${module.ec2.elb_name}"
+  account_id = module.iam.account_id
 }
 
 module "iam" {
@@ -33,4 +34,8 @@ module "ec2" {
   web_sg = "${module.vpc.web_sg}"
   main_vpc = "${module.vpc.main_vpc_id}"
   # web_tg_attachment = "${module.ecs.frontend_service_id}"
+}
+
+module "ecr" {
+  source = "./modules/ecr"
 }

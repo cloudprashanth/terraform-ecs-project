@@ -2,7 +2,7 @@ resource "aws_ecs_service" "frontend_service" {
   name            = "${local.project_name}-${local.env}-frontend"
   cluster         = aws_ecs_cluster.ecs_cluster.id
   task_definition = aws_ecs_task_definition.frontend_td.arn
-  desired_count   = 2
+  desired_count   = 1
   launch_type = "FARGATE"
   network_configuration {
     subnets = var.public_subnets

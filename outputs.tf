@@ -13,6 +13,10 @@ output "ecs_td_policy" {
   sensitive = true
 }
 
+output "account_id" {
+  value = module.iam.account_id
+}
+
 # output "private_subnets_list" {
 #   description = "List of Private Subnets"
 #   value = module.vpc.private_subnets

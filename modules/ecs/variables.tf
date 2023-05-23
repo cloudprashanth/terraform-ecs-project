@@ -25,3 +25,7 @@ variable "frontend_port" {
 variable "elb_name" {
   
 }
+
+variable "account_id" {
+  
+}

@@ -1,6 +1,6 @@
 resource "aws_route53_record" "www" {
   zone_id = data.aws_route53_zone.dns.zone_id
-  name    = "dev.${data.aws_route53_zone.dns.name}"
+  name    = "${local.env}.${data.aws_route53_zone.dns.name}"
   type    = "A"
   alias {
     name = var.elb_dns

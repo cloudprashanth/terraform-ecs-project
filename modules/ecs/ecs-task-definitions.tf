@@ -7,7 +7,7 @@ resource "aws_ecs_task_definition" "frontend_td" {
   container_definitions    = jsonencode([
     {
       name      = "${local.project_name}-${local.env}-frontend"
-      image     = "httpd"
+      image     = "${var.account_id}.dkr.ecr.us-east-1.amazonaws.com/pg-dev-frontend:latest"
       cpu       = 256
       memory    = 512
       essential = true

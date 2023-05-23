@@ -1,7 +1,3 @@
-variable "dev-record-value" {
-  
-}
-
 variable "elb_dns" {
   
 }

@@ -23,7 +23,6 @@ module "iam" {
 
 module "dns" {
   source = "./modules/route53"
-  dev-record-value = "54.237.243.174"
   elb_dns = module.ec2.elb_name
   elb_zone_id = module.ec2.elb_zone_id
 }

@@ -4,10 +4,10 @@ resource "aws_ecs_task_definition" "frontend_td" {
   network_mode             = "awsvpc"
   cpu                      = 256
   memory                   = 512
-  container_definitions    = jsonencode([
+  container_definitions = jsonencode([
     {
       name      = "${local.project_name}-${local.env}-frontend"
-      image     = "${var.account_id}.dkr.ecr.us-east-1.amazonaws.com/pg-dev-frontend:latest"
+      image     = "${var.account_id}.dkr.ecr.us-east-1.amazonaws.com/${local.project_name}-${local.env}-frontend:latest"
       cpu       = 256
       memory    = 512
       essential = true
@@ -17,12 +17,20 @@ resource "aws_ecs_task_definition" "frontend_td" {
           hostPort      = 80
         }
       ]
+      logConfiguration = {
+        logDriver = "awslogs"
+        options = {
+          awslogs-group         = var.frontend_log_group_name
+          awslogs-region        = data.aws_region.current.name
+          awslogs-stream-prefix = var.log_stream_prefix
+        }
+      }
     }
   ])
   runtime_platform {
     operating_system_family = "LINUX"
     cpu_architecture        = "X86_64"
   }
-  task_role_arn = var.td_role_arn
+  task_role_arn      = var.td_role_arn
   execution_role_arn = var.td_role_arn
 }

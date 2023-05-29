@@ -6,12 +6,12 @@ resource "aws_lb_target_group" "web_tg" {
   target_type = "ip"
   vpc_id      = var.main_vpc
   health_check {
-    healthy_threshold = "3"
-    interval = "30"
-    protocol = "HTTP"
-    matcher = "200"
-    timeout = "3"
-    path = var.health_check_path
+    healthy_threshold   = "3"
+    interval            = "30"
+    protocol            = "HTTP"
+    matcher             = "200"
+    timeout             = "3"
+    path                = var.health_check_path
     unhealthy_threshold = "2"
   }
 }
@@ -19,12 +19,12 @@ resource "aws_lb_target_group" "web_tg" {
 #Create HTTP Listener for Load Balancer
 resource "aws_lb_listener" "http" {
   load_balancer_arn = aws_lb.lb.arn
-  port = "80"
-  protocol = "HTTP"
+  port              = "80"
+  protocol          = "HTTP"
   default_action {
     redirect {
-      port = "443"
-      protocol = "HTTPS"
+      port        = "443"
+      protocol    = "HTTPS"
       status_code = "HTTP_301"
     }
     type = "redirect"
@@ -34,12 +34,12 @@ resource "aws_lb_listener" "http" {
 #Create HTTPS Listener for Load Balancer
 resource "aws_lb_listener" "https" {
   load_balancer_arn = aws_lb.lb.arn
-  port = "443"
-  protocol = "HTTPS"
-  ssl_policy = "ELBSecurityPolicy-TLS13-1-2-2021-06"
-  certificate_arn = data.aws_acm_certificate.amazon_issued.arn
+  port              = "443"
+  protocol          = "HTTPS"
+  ssl_policy        = "ELBSecurityPolicy-TLS13-1-2-2021-06"
+  certificate_arn   = data.aws_acm_certificate.amazon_issued.arn
   default_action {
     target_group_arn = aws_lb_target_group.web_tg.arn
-    type = "forward"
+    type             = "forward"
   }
 }

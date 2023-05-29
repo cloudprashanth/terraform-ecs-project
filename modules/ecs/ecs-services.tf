@@ -3,16 +3,16 @@ resource "aws_ecs_service" "frontend_service" {
   cluster         = aws_ecs_cluster.ecs_cluster.id
   task_definition = aws_ecs_task_definition.frontend_td.arn
   desired_count   = 1
-  launch_type = "FARGATE"
+  launch_type     = "FARGATE"
   network_configuration {
-    subnets = var.public_subnets
-    security_groups = ["${var.web_sg}"]
+    subnets          = var.public_subnets
+    security_groups  = ["${var.web_sg}"]
     assign_public_ip = true
   }
   load_balancer {
     target_group_arn = var.frontend_tg
-    container_name = aws_ecs_task_definition.frontend_td.family
-    container_port = var.frontend_port
+    container_name   = aws_ecs_task_definition.frontend_td.family
+    container_port   = var.frontend_port
   }
 }
 

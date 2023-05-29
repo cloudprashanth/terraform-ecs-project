@@ -1,7 +1,7 @@
 
 resource "aws_vpc" "main_vpc" {
-  cidr_block = var.vpc_main_cidr
-  instance_tenancy = var.instance_tenancy
+  cidr_block           = var.vpc_main_cidr
+  instance_tenancy     = var.instance_tenancy
   enable_dns_hostnames = "true"
   tags = {
     Name = "${local.project_name}-${local.env}-vpc"
@@ -9,10 +9,10 @@ resource "aws_vpc" "main_vpc" {
 }
 
 resource "aws_subnet" "public" {
-  count                   = "${length(local.az_names)}"
-  vpc_id                  = "${aws_vpc.main_vpc.id}"
-  cidr_block              = "${cidrsubnet(var.vpc_main_cidr, 8, count.index)}"
-  availability_zone       = "${local.az_names[count.index]}"
+  count                   = length(local.az_names)
+  vpc_id                  = aws_vpc.main_vpc.id
+  cidr_block              = cidrsubnet(var.vpc_main_cidr, 8, count.index)
+  availability_zone       = local.az_names[count.index]
   map_public_ip_on_launch = true
   tags = {
     Name = "${local.project_name}-${local.env}-public-subnet-${count.index + 1}"
@@ -20,7 +20,7 @@ resource "aws_subnet" "public" {
 }
 
 resource "aws_internet_gateway" "igw" {
-  vpc_id = "${aws_vpc.main_vpc.id}"
+  vpc_id = aws_vpc.main_vpc.id
 
   tags = {
     Name = "${local.project_name}-${local.env}-igw"
@@ -28,11 +28,11 @@ resource "aws_internet_gateway" "igw" {
 }
 
 resource "aws_route_table" "public_rt" {
-  vpc_id = "${aws_vpc.main_vpc.id}"
+  vpc_id = aws_vpc.main_vpc.id
 
   route {
     cidr_block = "0.0.0.0/0"
-    gateway_id = "${aws_internet_gateway.igw.id}"
+    gateway_id = aws_internet_gateway.igw.id
   }
 
   tags = {
@@ -41,9 +41,9 @@ resource "aws_route_table" "public_rt" {
 }
 
 resource "aws_route_table_association" "pub_sub_asociation" {
-  count          = "${length(local.az_names)}"
-  subnet_id      = "${local.pub_sub_ids[count.index]}"
-  route_table_id = "${aws_route_table.public_rt.id}"
+  count          = length(local.az_names)
+  subnet_id      = local.pub_sub_ids[count.index]
+  route_table_id = aws_route_table.public_rt.id
 }
 
 # resource "aws_subnet" "private" {

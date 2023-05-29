@@ -7,6 +7,11 @@ terraform {
       version = ">= 4.9"
     }
   }
+  backend "s3" {
+    bucket = "terraform-files-9055"
+    key    = "terraform-ecs-project"
+    region = "us-east-1"
+  }
 }
 
 provider "aws" {

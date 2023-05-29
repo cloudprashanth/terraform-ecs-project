@@ -1,3 +1,4 @@
 locals {
-  env = "${terraform.workspace}"
+  # env = terraform.workspace
+  env = "dev"
 }

@@ -1,14 +1,14 @@
 variable "project_name" {
   description = "Name of the Project"
-  default = "pg"
+  default     = "pg"
 }
 
 variable "vpc_main_cidr" {
   description = "Provide the CIDR block of VPC"
-  default = "10.0.0.0/18"
+  default     = "10.0.0.0/18"
 }
 
 variable "instance_tenancy" {
   description = "Details of the tenancy for the services to be deployed"
-  default = "default"
+  default     = "default"
 }

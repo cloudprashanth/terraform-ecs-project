@@ -31,3 +31,7 @@ output "frontend_log_group_name" {
   description = "Frontend Log group name"
   value       = module.cloudwatch.frontend_log_group_name.id
 }
+
+output "alb_dns" {
+  value = module.ec2.elb_name
+}

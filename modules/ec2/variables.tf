@@ -8,7 +8,7 @@ variable "project_name" {
 }
 
 variable "public_subnets" {
-
+  type = list(string)
 }
 
 variable "main_vpc" {

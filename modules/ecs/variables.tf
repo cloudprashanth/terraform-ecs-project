@@ -7,7 +7,7 @@ variable "td_role_arn" {
 }
 
 variable "public_subnets" {
-
+  type = list(string)
 }
 
 variable "web_sg" {
